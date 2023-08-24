@@ -85,7 +85,7 @@ class MusicModel(pl.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=0.0001, weight_decay=0.001)
 
 if __name__ == "__main__":
-    X, y = load_data('data_10.json')
+    X, y = load_data('mfcc_data.json')
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3) # Split the data into training data and validation data
     
     train_data = TensorDataset(torch.tensor(X_train, dtype=torch.float32), torch.tensor(y_train, dtype=torch.long))
