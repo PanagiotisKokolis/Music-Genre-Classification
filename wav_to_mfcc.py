@@ -1,7 +1,8 @@
 import numpy as np
 import librosa
 import librosa.display
-
+import tkinter as tk
+from tkinter import filedialog
 
 def wav_to_mfcc():
 
@@ -11,26 +12,28 @@ def wav_to_mfcc():
     TODO: Data augmentation of a single file to extract more data points.
     TODO: Be able to have user submit wav file. 
     """
-    file = input("Enter .wav filepath: ")
+    root = tk.Tk()
+    root.withdraw()  # Hide the tkinter window
+    file_path = filedialog.askopenfilename(filetypes=[("Audio files", "*.mp3;*.wav"), ("All files", "*.*")])
+    if file_path == '':
+        print('No file was selected!')
+        return None
 
-    # extract array of amplitude values, 22050 * file time
-    signal, sample_rate = librosa.load(file, sr=22050)
+    signal, sample_rate = librosa.load(file_path, sr=22050)
+    
+    samples_per_track = 22050 * 30
+    samples_per_segment = samples_per_track // 10
+    mfccs = []
+    
+    for i in range(10):
+        start = i * samples_per_segment
+        finish = start + samples_per_segment
 
-    # FFT to power spectrum 
-    fft = np.fft.fft(signal)
+        mfcc = librosa.feature.mfcc(y=signal[start:finish], sr=sample_rate, n_fft=2048, hop_length=512, n_mfcc=13)
+        mfcc = mfcc.T
+        mfccs.append(mfcc)
 
-    #calcuate the overall contribution each frequency has to the overall sound
-    magnitude = np.abs(fft)
-    frequency = np.linspace(0, sample_rate, len(magnitude))
+    return mfccs
 
-
-    #stft to obtain a spectrogram to give us a domain of frequency and time
-    stft = librosa.stft(signal)
-
-    spectrogram = np.abs(stft)
-
-    #MFCC last value dictates number
-    mfcc = librosa.feature.mfcc(y=signal, sr=sample_rate, n_fft=2048, hop_length=512, n_mfcc=13)
-    return mfcc
-
-wav_file= wav_to_mfcc()
+if __name__ == '__main__':
+    mfcc = wav_to_mfcc()
