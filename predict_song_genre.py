@@ -50,6 +50,6 @@ def predict_genre(model_path):
     
 
 if __name__ == "__main__":
-    model_path = "model_checkpoint0.ckpt"
+    model_path = "model_checkpoint.ckpt"
     predicted_genre = predict_genre(model_path)
     print(f"The predicted genre is: {predicted_genre}")
