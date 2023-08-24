@@ -1,6 +1,5 @@
 # GenreClassifier
 TODO: create conda environment with relevant packages
-TODO: convert wave files to stft mfcc
 TODO: implement GTZAN dataset and create genre folders with associated mfccs
 TODO: pytorch neural network
 TODO: 80-20 train test split

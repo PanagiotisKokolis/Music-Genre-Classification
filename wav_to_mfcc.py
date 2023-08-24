@@ -3,6 +3,7 @@ import librosa
 import librosa.display
 import matplotlib.pyplot as plt
 
+
 FILE = "country.00002.wav"
 
 # extract array of amplitude values, 22050 * file time
