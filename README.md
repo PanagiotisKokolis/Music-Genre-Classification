@@ -1,5 +1,5 @@
 # GenreClassifier
-TODO: create conda environment with relevant packages  
+TODO: create conda environment with relevant packages --done. 
 TODO: implement GTZAN dataset and create genre folders with associated mfccs  
 TODO: pytorch neural network  
 TODO: 80-20 train test split  
