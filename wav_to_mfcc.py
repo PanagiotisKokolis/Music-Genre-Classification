@@ -21,10 +21,10 @@ def wav_to_mfcc():
     signal, sample_rate = librosa.load(file_path, sr=22050)
     
     samples_per_track = 22050 * 30
-    samples_per_segment = samples_per_track // 10
+    samples_per_segment = samples_per_track // 3
     mfccs = []
     
-    for i in range(10):
+    for i in range(3):
         start = i * samples_per_segment
         finish = start + samples_per_segment
 

@@ -3,14 +3,14 @@ import os
 import math
 import librosa
 
-DATASET_PATH = "ENTER DATASET PATH HERE"
+DATASET_PATH = "/Users/pana/Downloads/genres"
 JSON_PATH = "mfcc_data.json"
 SAMPLE_RATE = 22050
 TRACK_DURATION = 30 
 SAMPLES_PER_TRACK = SAMPLE_RATE * TRACK_DURATION
 
 
-def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=5):
+def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=3):
     """Creates MFCC and labels it according to genre. Defaults listed.
 
         :param dataset_path (str): Marsyas dataset path
@@ -72,4 +72,4 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
         json.dump(data, fp, indent=4)
                
 if __name__ == "__main__":
-    save_mfcc(DATASET_PATH, JSON_PATH, num_segments=10)
+    save_mfcc(DATASET_PATH, JSON_PATH, num_segments=3)
