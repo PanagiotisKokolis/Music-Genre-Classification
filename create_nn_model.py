@@ -36,7 +36,7 @@ class MusicModel(pl.LightningModule):
         self.fc3 = nn.Linear(256, 64)
         self.fc4 = nn.Linear(64, 10)
         
-        # Dropout value of 0.35 means there's a 30% chance any particular neuron can be turned off during training.
+        # Dropout value of 0.35 means there's a 35% chance any particular neuron can be turned off during training.
         self.dropout = nn.Dropout(0.35)
         
         # A common metric to measure loss. Lower values means less error.
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     logger = TensorBoardLogger('tb_logs', name='Genre Classifier Model')
 
     #early stop implemented due to the loss function diverging
-    early_stop_callback = EarlyStopping(monitor='val_loss_epoch',patience=5,verbose=True,mode='min')
+    early_stop_callback = EarlyStopping(monitor='val_loss',patience=5,verbose=True,mode='min')
 
     trainer = pl.Trainer(max_epochs=50,logger=logger,callbacks=[early_stop_callback])
 
