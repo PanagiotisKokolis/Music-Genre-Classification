@@ -5,12 +5,9 @@ from torch.utils.data import DataLoader
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import TensorBoardLogger
 import torchmetrics
-<<<<<<< HEAD
 from pytorch_lightning.callbacks import EarlyStopping
-=======
 from torch.utils.data import Dataset
 import h5py
->>>>>>> origin/main
 
 class GTZANDataset(Dataset):
     def __init__(self, hdf5_path):
@@ -39,8 +36,8 @@ class MusicModel(pl.LightningModule):
         self.fc3 = nn.Linear(256, 64)
         self.fc4 = nn.Linear(64, 10)
         
-        # Dropout value of 0.3 means there's a 30% chance any particular neuron can be turned off during training.
-        self.dropout = nn.Dropout(0.50)
+        # Dropout value of 0.35 means there's a 30% chance any particular neuron can be turned off during training.
+        self.dropout = nn.Dropout(0.35)
         
         # A common metric to measure loss. Lower values means less error.
         # H(P, Q) = — sum x in X P(x) * log(Q(x))
@@ -95,22 +92,11 @@ class MusicModel(pl.LightningModule):
     
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    X, y = load_data('mfcc_data.json')
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2) # Split the data into training data and validation data
-
-    train_data = TensorDataset(torch.tensor(X_train, dtype=torch.float32), torch.tensor(y_train, dtype=torch.long))
-    test_data = TensorDataset(torch.tensor(X_val, dtype=torch.float32), torch.tensor(y_val, dtype=torch.long))
-    
-    train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
-    val_loader = DataLoader(test_data, batch_size=32)
-=======
     train_data = GTZANDataset('gtzan_data_train.h5')
     val_data = GTZANDataset('gtzan_data_val.h5')
->>>>>>> origin/main
 
-    train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
-    val_loader = DataLoader(val_data, batch_size=32)
+    train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
+    val_loader = DataLoader(val_data, batch_size=64)
 
     sample = next(iter(train_loader))
     input_shape = sample[0].shape[1] * sample[0].shape[2] # Determine shape from the data from the first sample in the batch.

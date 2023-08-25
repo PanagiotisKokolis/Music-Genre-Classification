@@ -5,14 +5,9 @@ import h5py
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-<<<<<<< HEAD
-DATASET_PATH = "/Users/pana/Downloads/genres"
-JSON_PATH = "mfcc_data.json"
-=======
-DATASET_PATH = "ENTER DATASET PATH HERE" # Change this to the location of the audio folders.
+DATASET_PATH = "/Users/pana/Downloads/genres" # Change this to the location of the audio folders.
 TRAINING_OUTPUT_PATH = "gtzan_data_train.h5"
 VALIDATION_OUTPUT_PATH = "gtzan_data_val.h5"
->>>>>>> origin/main
 SAMPLE_RATE = 22050
 TRACK_DURATION = 30
 SAMPLES_PER_TRACK = SAMPLE_RATE * TRACK_DURATION
@@ -20,17 +15,6 @@ SAMPLES_PER_TRACK = SAMPLE_RATE * TRACK_DURATION
 def save_mfcc(dataset_path, training_path, validation_path, val_size=0.2, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=5):
     """Creates MFCCs and labels it according to genre. Saves to training, validation, and testing data. Defaults listed.
 
-<<<<<<< HEAD
-def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=3):
-    """Creates MFCC and labels it according to genre. Defaults listed.
-
-        :param dataset_path (str): Marsyas dataset path
-        :param json_path (str): Path of created fileset
-        :param num_mfcc (int): mfccs per segment
-        :param n_fft (int): FFT interval
-        :param hop_length (int): sliding window for FFT
-        :param: num_segments (int): split tracks into smaller segments to increase model training set
-=======
         :param dataset_path (str): Dataset path for audio files.
         :param training_path (str): Path for the training data output.
         :param validation_path (str): Path for the validation data output.
@@ -39,7 +23,6 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
         :param n_fft (int): FFT interval.
         :param hop_length (int): Sliding window for FFT.
         :param: num_segments (int): Split tracks into smaller segments to increase model training set.
->>>>>>> origin/main
         :return:
     """
     data = {
@@ -97,8 +80,4 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
         h5f.attrs["mapping"] = np.array(data["mapping"], dtype=h5py.special_dtype(vlen=str))
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    save_mfcc(DATASET_PATH, JSON_PATH, num_segments=3)
-=======
     save_mfcc(DATASET_PATH, TRAINING_OUTPUT_PATH, VALIDATION_OUTPUT_PATH)
->>>>>>> origin/main
