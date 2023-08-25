@@ -29,30 +29,26 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
         "mfcc": []
     }
 
-    samples_per_segment = int(SAMPLES_PER_TRACK / num_segments)
+    samples_per_segment = SAMPLES_PER_TRACK // num_segments
     num_mfcc_vectors_per_segment = math.ceil(samples_per_segment / hop_length)
 
     # loop through all genre folders
     for i, (dirpath, dirnames, filenames) in enumerate(os.walk(dataset_path)):
-
         # catch case between folders
         if dirpath is not dataset_path:
-
             # save genre label (i.e., sub-folder name) in the mapping
-            semantic_label = dirpath.split("/")[-1]
+            semantic_label = os.path.basename(dirpath)
             data["mapping"].append(semantic_label)
             print("\nProcessing: {}".format(semantic_label))
 
             # process all audio files in genre sub-dir
             for wav in filenames:
-
 		        # load wav
                 file_path = os.path.join(dirpath, wav)
                 signal, sample_rate = librosa.load(file_path, sr=SAMPLE_RATE)
 
                 # process all segments of audio file
                 for j in range(num_segments):
-
                     # calculate start and finish sample for current segment
                     start = samples_per_segment * j
                     finish = start + samples_per_segment
