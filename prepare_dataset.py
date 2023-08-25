@@ -3,7 +3,7 @@ import os
 import math
 import librosa
 
-DATASET_PATH = "/Users/pana/Downloads/genres"
+DATASET_PATH = "ENTER DATASET PATH HERE"
 JSON_PATH = "mfcc_data.json"
 SAMPLE_RATE = 22050
 TRACK_DURATION = 30 

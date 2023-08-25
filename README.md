@@ -20,6 +20,7 @@ The file will be in the /test_output folder listed as converted_output.wav
 You can use the file to be evaluated by the model, or incorportate it in test data under genre folder  
 
 ## Preparing your dataset  
+Input the path of your dataset in line 6 of the prepare_dataset.py file
 Take the Marsyas (or personal) dataset and run the prepare_dataset.py file  
 The dataset will be converted to a jsonfile of mfcc values usable by the neural network model  
 
