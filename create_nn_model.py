@@ -1,24 +1,30 @@
-import json
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader, TensorDataset
-from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import TensorBoardLogger
 import torchmetrics
+<<<<<<< HEAD
 from pytorch_lightning.callbacks import EarlyStopping
+=======
+from torch.utils.data import Dataset
+import h5py
+>>>>>>> origin/main
 
-def load_data(data_path):
-    with open(data_path, "r") as f:
-        data = json.load(f)
-    
-    X = np.array(data["mfcc"])
-    y = np.array(data["labels"])
-    
-    print("Data succesfully loaded!")
-    return X, y
+class GTZANDataset(Dataset):
+    def __init__(self, hdf5_path):
+        self.hdf5_path = hdf5_path
+        with h5py.File(self.hdf5_path, 'r') as h5_file:
+            self.mfcc = torch.tensor(h5_file['mfcc'][:], dtype=torch.float32)
+            self.labels = torch.tensor(h5_file['labels'][:], dtype=torch.long)
+            print("Data succesfully loaded!")
+        
+    def __len__(self):
+        return len(self.mfcc)
+
+    def __getitem__(self, idx):
+        return self.mfcc[idx], self.labels[idx]
 
 
 class MusicModel(pl.LightningModule):
@@ -68,8 +74,8 @@ class MusicModel(pl.LightningModule):
         loss = self.criterion(y_hat, y)
         self.train_accuracy(y_hat, y)
         
-        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        self.log('train_acc', self.train_accuracy, on_step=True, on_epoch=True, prog_bar=True)
+        self.log('train_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('train_acc', self.train_accuracy, on_step=False, on_epoch=True, prog_bar=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -79,8 +85,8 @@ class MusicModel(pl.LightningModule):
         loss = self.criterion(y_hat, y)
         self.val_accuracy(y_hat, y)
         
-        self.log('val_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        self.log('val_acc', self.val_accuracy, on_step=True, on_epoch=True, prog_bar=True)
+        self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('val_acc', self.val_accuracy, on_step=False, on_epoch=True, prog_bar=True)
         return loss
 
     def configure_optimizers(self):
@@ -89,6 +95,7 @@ class MusicModel(pl.LightningModule):
     
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     X, y = load_data('mfcc_data.json')
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2) # Split the data into training data and validation data
 
@@ -97,8 +104,16 @@ if __name__ == "__main__":
     
     train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
     val_loader = DataLoader(test_data, batch_size=32)
+=======
+    train_data = GTZANDataset('gtzan_data_train.h5')
+    val_data = GTZANDataset('gtzan_data_val.h5')
+>>>>>>> origin/main
 
-    input_shape = X.shape[1] * X.shape[2]
+    train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
+    val_loader = DataLoader(val_data, batch_size=32)
+
+    sample = next(iter(train_loader))
+    input_shape = sample[0].shape[1] * sample[0].shape[2] # Determine shape from the data from the first sample in the batch.
     lightning_model = MusicModel(input_shape)
 
     logger = TensorBoardLogger('tb_logs', name='Genre Classifier Model')
@@ -109,4 +124,4 @@ if __name__ == "__main__":
     trainer = pl.Trainer(max_epochs=50,logger=logger,callbacks=[early_stop_callback])
 
     trainer.fit(lightning_model, train_loader, val_loader)
-    trainer.save_checkpoint("model_checkpoint.ckpt")
+    trainer.save_checkpoint("gtzan_model_checkpoint.ckpt")
