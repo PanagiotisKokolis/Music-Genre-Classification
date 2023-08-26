@@ -25,8 +25,7 @@ class GTZANDataset(Dataset):
 
 
 class MusicModel(pl.LightningModule):
-    """Use high-level API known as Pytorch-Lightning to abstract the training and validation steps.
-    """
+    # Pytorch Lightning model used here
     def __init__(self, input_shape):
         super(MusicModel, self).__init__()
         self.save_hyperparameters()
@@ -88,12 +87,12 @@ class MusicModel(pl.LightningModule):
 
     def configure_optimizers(self):
         # Use L2 regularization which attempts to reduce outlier weights
-        return torch.optim.Adam(self.parameters(), lr=0.0001, weight_decay=0.001)
+        return torch.optim.Adam(self.parameters(), lr=0.00005, weight_decay=0.020)
     
 
 if __name__ == "__main__":
-    train_data = GTZANDataset('gtzan_data_train.h5')
-    val_data = GTZANDataset('gtzan_data_val.h5')
+    train_data = GTZANDataset('/Users/pana/projects/github/GenreClassifier/_train.h5_train.h5')
+    val_data = GTZANDataset('/Users/pana/projects/github/GenreClassifier/_train.h5_val.h5')
 
     train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
     val_loader = DataLoader(val_data, batch_size=64)
