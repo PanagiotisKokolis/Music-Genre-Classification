@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prepare Data Set</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1 id="title">{{ main_title }}</h1>
+    <a href="/">
+        <button>Home</button>
+    </a>
+    <div class="upload-container">
+        <div class="upload-header">
+            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+            <h1>Upload Folder</h1>
+        </div>
+        <div class="upload-body" id="drop">
+            <i class="fa fa-folder-open" aria-hidden="true"></i>
+            <p><b>Drag and drop</b> a folder here<br />or <a href="#" id="triggerFolder">browse</a> to begin the upload</p>
+            <input type="file" id="folderInput" webkitdirectory directory multiple />
+        </div>
+        <div class="upload-footer">
+            <button id="uploadFolderButton">Upload Folder</button>
+        </div>
+    </div>
+    <div id="uploadStatus" class="hidden"></div>
+    <script src="{{ url_for('static', filename='folder_handler.js') }}"></script>
+</body>
+</html>

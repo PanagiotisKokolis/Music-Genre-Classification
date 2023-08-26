@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Genre Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    
+    <h1 id="title">{{ main_title }}</h1>
+    <a href="/">
+        <button>Home</button>
+    </a>
+    <div class="upload-container">
+        <div class="upload-header">
+            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+            <h2>Upload Files</h2>
+        </div>
+        <div class="upload-body" id="drop">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <p><b>Drag and drop</b> files here<br />or <a href="#" id="triggerFile">browse</a> to begin the upload</p>
+            <input type="file" multiple="multiple" id="fileInput" />
+        </div>
+        <div class="upload-footer">
+            <button id="uploadButton">Upload Files</button>
+        </div>
+    </div>
+    <div id="uploadStatus" class="hidden"></div>
+    <script src="{{ url_for('static', filename='file_handler.js') }}"></script>
+</body>
+</html>
