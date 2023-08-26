@@ -48,22 +48,22 @@ def song_upload():
 
     return jsonify({'status': 'success', 'message': f'The genre is {prediction}', 'filename': filename})
 
-# @app.route('/upload-folder', methods=['POST'])
-# def folder_upload():
-#     if 'folder' not in request.files:
-#         return jsonify({'status': 'error', 'message': 'No folder part'})
+@app.route('/upload-folder', methods=['POST'])
+def folder_upload():
+    if 'folder' not in request.files:
+        return jsonify({'status': 'error', 'message': 'No folder part'})
 
-#     folder = request.files['folder']
+    folder = request.files['folder']
 
-#     if folder.filename == '':
-#         return jsonify({'status': 'error', 'message': 'No selected folder'})
+    if folder.filename == '':
+        return jsonify({'status': 'error', 'message': 'No selected folder'})
 
-#     folder_path = os.path.join(app.config['UPLOAD_FOLDER'], 'user_input_folder')
-#     os.makedirs(folder_path, exist_ok=True)
+    folder_path = os.path.join(app.config['UPLOAD_FOLDER'], 'user_input_folder')
+    os.makedirs(folder_path, exist_ok=True)
 
-#     folder.save(folder_path)
+    folder.save(folder_path)
 
-#     return jsonify({'status': 'success', 'message': 'Folder uploaded successfully', 'folder_path': folder_path})
+    return jsonify({'status': 'success', 'message': 'Folder uploaded successfully', 'folder_path': folder_path})
 
 
 if __name__ == '__main__':
